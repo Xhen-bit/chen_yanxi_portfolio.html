@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals (Stone, Sky) -->
-    <!-- Application Structure Plan: A single-page, vertical-scrolling SPA with a fixed top navigation. The structure is designed as a narrative journey: Hero -> Profile (with interactive skills chart) -> Tabbed Projects Section -> Card-based Holistic Development -> Footer. This non-linear but guided structure enhances usability by allowing both sequential reading and direct access to key information, making it more engaging than a static document. -->
-    <!-- Visualization & Content Choices: 1. Skills -> Goal: Compare -> Viz: Chart.js Radar Chart -> Interaction: Hover Tooltips -> Justification: More engaging and visual than a text list. 2. Projects -> Goal: Organize -> Viz: JS Tabbed Interface -> Interaction: Click to reveal -> Justification: Prevents clutter, focuses attention. 3. Holistic Dev -> Goal: Organize -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Scannable and visually separates diverse achievements. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling SPA with a fixed top navigation. The structure is designed as a narrative journey: Hero (with basic info) -> Profile (with interactive skills chart) -> Sequential Projects Section -> Card-based Holistic Development -> Footer. This non-linear but guided structure enhances usability by allowing both sequential reading and direct access to key information, making it more engaging than a static document. -->
+    <!-- Visualization & Content Choices: 1. Skills -> Goal: Compare -> Viz: Chart.js Radar Chart -> Interaction: Hover Tooltips -> Justification: More engaging and visual than a text list. 2. Projects -> Goal: Organize -> Viz: Static sequential display with images -> Interaction: Scroll -> Justification: Simplifies navigation for sequential viewing, integrates images for visual appeal. 3. Holistic Dev -> Goal: Organize -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Scannable and visually separates diverse achievements. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -26,11 +26,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .tab-active {
-            border-color: #0c4a6e; /* sky-800 */
-            color: #0c4a6e;
-            font-weight: 500;
-        }
         .chart-container {
             position: relative;
             width: 100%;
@@ -44,6 +39,18 @@
             .chart-container {
                 height: 400px;
             }
+        }
+        .project-image-container {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-lg */
+            margin-bottom: 1rem;
+        }
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -77,14 +84,23 @@
         <section id="hero" class="h-screen min-h-[600px] flex items-center bg-stone-100">
             <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/2 text-center md:text-left">
-                    <h1 class="text-4xl md:text-6xl font-bold text-sky-900 leading-tight">Innovating for Impact</h1>
-                    <h2 class="text-2xl md:text-4xl font-light text-stone-600 mt-2">My Journey in Interdisciplinary Problem-Solving</h2>
-                    <p class="mt-6 text-lg text-stone-600 max-w-xl mx-auto md:mx-0">Empowering Innovation through Mathematical Insight and Technological Application.</p>
+                    <h1 class="text-4xl md:text-6xl font-bold text-sky-900 leading-tight">Pioneering Interdisciplinary Solutions</h1>
+                    <h2 class="text-2xl md:text-4xl font-light text-stone-600 mt-2">A Portfolio for HKUST(GZ) Redbird Challenge Camp</h2>
+                    <p class="mt-6 text-lg text-stone-600 max-w-xl mx-auto md:mx-0">Showcasing my commitment to interdisciplinary innovation and empowering SMEs through mathematical insights and advanced technology.</p>
+                    
+                    <div class="mt-8 text-left inline-block md:block">
+                        <p class="text-stone-700 font-semibold">Name: Chen Yanxi</p>
+                        <p class="text-stone-700">University: Chongqing University</p>
+                        <p class="text-stone-700">Major: Mathematics and Applied Mathematics</p>
+                        <p class="text-stone-700">Email: chennnnyanxi@163.com</p>
+                        <p class="text-stone-700 text-sm mt-4">View this portfolio online: <a href="#" class="text-sky-700 hover:underline">your-portfolio-link.com</a></p>
+                    </div>
+
                     <a href="#projects" class="inline-block mt-8 bg-sky-800 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-sky-700 transition-transform hover:scale-105">Explore My Projects</a>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
                     <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50">
-                        <img src="https://placehold.co/400x400/a3e635/1c1917?text=Profile\nPhoto" alt="Chen Yanxi's Professional Photo" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/e5e7eb/44403c?text=Image+Not+Found';">
+                        <img src="images/profile-photo.jpg" alt="Chen Yanxi's Professional Photo" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/e5e7eb/44403c?text=Image+Not+Found';">
                     </div>
                 </div>
             </div>
@@ -100,7 +116,7 @@
                 <div class="grid md:grid-cols-5 gap-12 items-start">
                     <div class="md:col-span-3">
                         <h3 class="text-2xl font-semibold text-stone-800 mb-4">Concise Bio</h3>
-                        <p class="text-stone-600 leading-relaxed mb-8">I am Chen Yanxi, a student majoring in Mathematics and Applied Mathematics from Chongqing University, with a strong passion for interdisciplinary research, innovative practices, and problem-solving. With a solid foundation in mathematics and an IELTS score of 7.0, I am committed to applying theoretical knowledge to cutting-edge technological fields, exploring the infinite possibilities of intelligent solutions.</p>
+                        <p class="text-stone-600 leading-relaxed mb-8">I am Chen Yanxi, a student from Chongqing University's Hongshen Honor College's Top Talent Program, majoring in Mathematics and Applied Mathematics. I possess a strong passion for interdisciplinary research, innovative practices, and solving real-world problems. With a solid foundation in mathematics, I am committed to applying theoretical knowledge to cutting-edge technological fields, exploring the infinite possibilities of intelligent solutions.</p>
                         
                         <h3 class="text-2xl font-semibold text-stone-800 mb-4">Soft Skills & Personal Attributes</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-stone-600">
@@ -116,6 +132,7 @@
                         <ul class="list-none space-y-2">
                              <li class="flex items-center gap-3"><span class="text-amber-500">🏆</span>Second Prize in National Mathematical Contest in Modeling (2024)</li>
                              <li class="flex items-center gap-3"><span class="text-amber-500">🏆</span>Chongqing University Comprehensive Scholarship (multiple times)</li>
+                             <li class="flex items-center gap-3"><span class="text-amber-500">🏆</span>IELTS 7.0; Third Prize in CQU "Guocai Cup" English Speech Contest & English Reading Contest (2023)</li>
                         </ul>
                     </div>
                     <div class="md:col-span-2">
@@ -135,83 +152,74 @@
                     <h2 class="text-3xl md:text-4xl font-bold text-sky-900">Core Project Experience</h2>
                     <p class="text-lg text-stone-600 mt-2">From theory to practice, solving real-world problems.</p>
                 </div>
-                <!-- Tabs -->
-                <div class="mb-8 border-b border-stone-300">
-                    <nav class="flex flex-wrap -mb-px" id="project-tabs">
-                        <button data-target="project1" class="tab-btn tab-active text-lg px-4 py-3 border-b-2 border-transparent">Federated Learning</button>
-                        <button data-target="project3" class="tab-btn text-lg px-4 py-3 border-b-2 border-transparent text-stone-500 hover:text-stone-700">Fault Detection</button>
-                        <button data-target="project2" class="tab-btn text-lg px-4 py-3 border-b-2 border-transparent text-stone-500 hover:text-stone-700">Defect Prediction</button>
-                    </nav>
-                </div>
-                <!-- Tab Content -->
-                <div id="project-content">
-                    <article id="project1" class="project-panel">
-                        <div class="bg-white p-8 rounded-lg shadow-lg">
-                            <h3 class="text-2xl font-bold text-sky-800 mb-1">Asynchronous Federated Learning: Empowering Intelligent UAV Swarms</h3>
-                            <p class="text-sm text-stone-500 mb-4">Provincial Innovation Entrepreneurship Program (Deputy Leader)</p>
-                            <div class="grid md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-semibold text-lg mb-2">Project Background & Challenges</h4>
-                                    <p class="text-stone-600 project-desc">Traditional UAV swarm collaborative learning faces challenges such as data privacy, communication efficiency, and resource constraints, limiting its application in complex environments.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg mb-2">My Approach & Methodology</h4>
-                                    <p class="text-stone-600 project-desc">Addressing these issues, I was responsible for developing and improving the theoretical foundation of asynchronous federated learning algorithms. Through rigorous mathematical derivation, we proved the convergence of this algorithm under non-ideal communication conditions, providing theoretical support for distributed intelligent collaboration in UAV swarms.</p>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <h4 class="font-semibold text-lg mb-2">Outcomes & Reflections</h4>
-                                    <p class="text-stone-600 project-desc">The project was rated 'Good' at the provincial level. I was primarily responsible for the theoretical modeling and convergence analysis of the core algorithm. Through this project, I gained a deep understanding of the potential of federated learning in distributed systems and enhanced my capabilities in complex algorithm design and verification.</p>
-                                </div>
+                
+                <div id="project-content" class="space-y-16">
+                    <!-- Project 1: Federated Learning -->
+                    <article id="project1" class="project-panel bg-white p-8 rounded-lg shadow-lg">
+                        <div class="project-image-container">
+                            <img src="images/federated-learning-project.png" alt="Image of Federated Learning Project" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x200/e5e7eb/44403c?text=Image+Not+Found';">
+                        </div>
+                        <h3 class="text-xl font-bold text-sky-800 mb-1">Asynchronous Federated Learning: Empowering Intelligent UAV Swarms</h3>
+                        <p class="text-sm text-stone-500 mb-4">Provincial Innovation Entrepreneurship Program (Deputy Leader)</p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Project Background & Challenges</h4>
+                                <p class="text-stone-600 project-desc">Traditional UAV swarm collaborative learning faces challenges such as data privacy, communication efficiency, and resource constraints, limiting its application in complex environments.</p>
                             </div>
-                            <button class="generate-insight-btn mt-6 bg-sky-600 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition-colors">✨ Get Project Insight</button>
-                            <div class="insight-output mt-4 text-stone-700 leading-relaxed"></div>
-                            <div class="loading-indicator mt-4 text-stone-500 hidden">Generating...</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">My Approach & Methodology</h4>
+                                <p class="text-stone-600 project-desc">Addressing these issues, I was responsible for developing and improving the theoretical foundation of asynchronous federated learning algorithms. Through rigorous mathematical derivation, we proved the convergence of this algorithm under non-ideal communication conditions, providing theoretical support for distributed intelligent collaboration in UAV swarms.</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="font-semibold text-lg mb-2">Outcomes & Reflections</h4>
+                                <p class="text-stone-600 project-desc">The project was rated 'Good' at the provincial level. I was primarily responsible for the theoretical modeling and convergence analysis of the core algorithm. Through this project, I gained a deep understanding of the potential of federated learning in distributed systems and enhanced my capabilities in complex algorithm design and verification.</p>
+                            </div>
                         </div>
                     </article>
-                    <article id="project3" class="project-panel hidden">
-                        <div class="bg-white p-8 rounded-lg shadow-lg">
-                            <h3 class="text-2xl font-bold text-sky-800 mb-1">Intelligent Fault Diagnosis: Weak Signal Detection in Variable-Speed Mechanical Systems</h3>
-                            <p class="text-sm text-stone-500 mb-4">Applied Statistics Research Project (Independent Project Leader)</p>
-                            <div class="grid md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-semibold text-lg mb-2">Project Background & Challenges</h4>
-                                    <p class="text-stone-600 project-desc">Detecting weak faults in variable-speed mechanical systems under noisy and non-stationary conditions is a significant challenge in the industrial sector.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg mb-2">My Approach & Methodology</h4>
-                                    <p class="text-stone-600 project-desc">I independently led this project, focusing on stochastic modeling and signal enhancement under the guidance of my supervisor. I developed a Variable-Coefficient Bistable Stochastic Resonance (VCBSR) model, aiming for precise weak fault detection under low SNR and variable-speed conditions.</p>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <h4 class="font-semibold text-lg mb-2">Outcomes & Reflections</h4>
-                                    <p class="text-stone-600 project-desc">Currently, the model is undergoing experimental validation and has yielded promising preliminary results. I was responsible for the entire process from theory to experimentation. This project significantly enhanced my independent research capabilities, my understanding of complex signal processing, and my confidence in solving practical engineering challenges.</p>
-                                </div>
+
+                    <!-- Project 2: Fault Detection -->
+                    <article id="project2" class="project-panel bg-white p-8 rounded-lg shadow-lg">
+                        <div class="project-image-container">
+                            <img src="images/Fault-Diagnosis.png" alt="Image of Fault Detection Project" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x200/e5e7eb/44403c?text=Image+Not+Found';">
+                        </div>
+                        <h3 class="text-xl font-bold text-sky-800 mb-1">Intelligent Fault Diagnosis: Weak Signal Detection in Variable-Speed Mechanical Systems</h3>
+                        <p class="text-sm text-stone-500 mb-4">Applied Statistics Research Project (Independent Project Leader)</p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Project Background & Challenges</h4>
+                                <p class="text-stone-600 project-desc">Detecting weak faults in variable-speed mechanical systems under noisy and non-stationary conditions is a significant challenge in the industrial sector.</p>
                             </div>
-                            <button class="generate-insight-btn mt-6 bg-sky-600 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition-colors">✨ Get Project Insight</button>
-                            <div class="insight-output mt-4 text-stone-700 leading-relaxed"></div>
-                            <div class="loading-indicator mt-4 text-stone-500 hidden">Generating...</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">My Approach & Methodology</h4>
+                                <p class="text-stone-600 project-desc">I independently led this project, focusing on stochastic modeling and signal enhancement under the guidance of my supervisor. I developed a Variable-Coefficient Bistable Stochastic Resonance (VCBSR) model, aiming for precise weak fault detection under low SNR and variable-speed conditions.</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="font-semibold text-lg mb-2">Outcomes & Reflections</h4>
+                                <p class="text-stone-600 project-desc">Currently, the model is undergoing experimental validation and has yielded promising preliminary results. I was responsible for the entire process from theory to experimentation. This project significantly enhanced my independent research capabilities, my understanding of complex signal processing, and my confidence in solving practical engineering challenges.</p>
+                            </div>
                         </div>
                     </article>
-                    <article id="project2" class="project-panel hidden">
-                        <div class="bg-white p-8 rounded-lg shadow-lg">
-                            <h3 class="text-2xl font-bold text-sky-800 mb-1">Data-Driven Production Defect Prediction: Mathematical Modeling in Industrial Application</h3>
-                            <p class="text-sm text-stone-500 mb-4">National Mathematical Contest in Modeling (Leader)</p>
-                             <div class="grid md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-semibold text-lg mb-2">Project Background & Challenges</h4>
-                                    <p class="text-stone-600 project-desc">Traditional production inspection is inefficient and struggles to dynamically predict defect rates, leading to increased costs and wasted resources.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg mb-2">My Approach & Methodology</h4>
-                                    <p class="text-stone-600 project-desc">As the project leader, I led the team to develop a data-driven defect prediction model. We innovatively applied particle filtering and Monte Carlo simulation to dynamically estimate defect rates, thereby achieving precise monitoring and optimization of the production process.</p>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <h4 class="font-semibold text-lg mb-2">Outcomes & Reflections</h4>
-                                    <p class="text-stone-600 project-desc">The model won the 'Second Prize in the National Mathematical Contest in Modeling'. I was responsible for the overall project's model design, algorithm implementation, and team coordination. This experience not only honed my mathematical modeling skills and ability to solve practical industrial problems but also made me deeply appreciate the importance of interdisciplinary collaboration.</p>
-                                </div>
+
+                    <!-- Project 3: Defect Prediction -->
+                    <article id="project3" class="project-panel bg-white p-8 rounded-lg shadow-lg">
+                        <div class="project-image-container">
+                            <img src="images/Defect-Prediction.png" alt="Image of Defect Prediction Project" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x200/e5e7eb/44403c?text=Image+Not+Found';">
+                        </div>
+                        <h3 class="text-xl font-bold text-sky-800 mb-1">Data-Driven Production Defect Prediction: Mathematical Modeling in Industrial Application</h3>
+                        <p class="text-sm text-stone-500 mb-4">National Mathematical Contest in Modeling (Leader)</p>
+                         <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Project Background & Challenges</h4>
+                                <p class="text-stone-600 project-desc">Traditional production inspection is inefficient and struggles to dynamically predict defect rates, leading to increased costs and wasted resources.</p>
                             </div>
-                            <button class="generate-insight-btn mt-6 bg-sky-600 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition-colors">✨ Get Project Insight</button>
-                            <div class="insight-output mt-4 text-stone-700 leading-relaxed"></div>
-                            <div class="loading-indicator mt-4 text-stone-500 hidden">Generating...</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">My Approach & Methodology</h4>
+                                <p class="text-stone-600 project-desc">As the project leader, I led the team to develop a data-driven defect prediction model. We innovatively applied particle filtering and Monte Carlo simulation to dynamically estimate defect rates, thereby achieving precise monitoring and optimization of the production process.</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="font-semibold text-lg mb-2">Outcomes & Reflections</h4>
+                                <p class="text-stone-600 project-desc">The model won the 'Second Prize in the National Mathematical Contest in Modeling'. I was responsible for the overall project's model design, algorithm implementation and team coordination. This experience not only honed my mathematical modeling skills and ability to solve practical industrial problems but also made me deeply appreciate the importance of interdisciplinary collaboration.</p>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -229,7 +237,7 @@
                     <div class="bg-stone-100 p-6 rounded-lg text-center shadow-sm">
                         <div class="text-4xl mb-3">🤝</div>
                         <h3 class="text-xl font-semibold text-stone-800 mb-2">Diverse Development & Leadership</h3>
-                        <p class="text-stone-600">As the Deputy Secretary of the Youth League Committee of Hongshen College, I organized and coordinated various student activities, and was honored as an Outstanding Student Cadre, cultivating excellent organizational, communication, and leadership skills.</p>
+                        <p class="text-stone-600">As the Deputy Secretary of the Youth League Committee of Hongshen College and Vice President of the Chongqing University Badminton Association, I organized and coordinated various student activities, and was honored as an Outstanding Student Cadre, cultivating excellent organizational, communication, and leadership skills.</p>
                     </div>
                      <div class="bg-stone-100 p-6 rounded-lg text-center shadow-sm">
                         <div class="text-4xl mb-3">🏃‍♀️</div>
@@ -240,9 +248,6 @@
                         <div class="text-4xl mb-3">🎯</div>
                         <h3 class="text-xl font-semibold text-stone-800 mb-2">Future Vision & Redbird Alignment</h3>
                         <p class="text-stone-600" id="future-vision-text">I aspire to apply my skills in the interdisciplinary environment of the Redbird Camp to address pain points for SMEs, facilitating their transformation and laying a solid foundation for future development.</p>
-                        <button id="expand-vision-btn" class="mt-4 bg-sky-600 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition-colors">✨ Expand Future Potential</button>
-                        <div id="expanded-vision-output" class="mt-4 text-stone-700 leading-relaxed"></div>
-                        <div id="vision-loading-indicator" class="mt-4 text-stone-500 hidden">Generating...</div>
                     </div>
                 </div>
             </div>
@@ -317,107 +322,6 @@
                     }
                 }
             });
-
-            // Project Tabs
-            const tabs = document.querySelectorAll('.tab-btn');
-            const panels = document.querySelectorAll('.project-panel');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('tab-active', 'text-stone-800'));
-                    panels.forEach(p => p.classList.add('hidden'));
-
-                    tab.classList.add('tab-active');
-                    tab.classList.remove('text-stone-500', 'hover:text-stone-700');
-                    document.getElementById(tab.dataset.target).classList.remove('hidden');
-                });
-            });
-
-            // LLM Integration for Project Insights
-            document.querySelectorAll('.generate-insight-btn').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const projectPanel = event.target.closest('.project-panel');
-                    const projectTitle = projectPanel.querySelector('h3').textContent;
-                    const projectDescElements = projectPanel.querySelectorAll('.project-desc');
-                    let projectDescription = '';
-                    projectDescElements.forEach(el => {
-                        projectDescription += el.textContent + ' ';
-                    });
-
-                    const insightOutputDiv = projectPanel.querySelector('.insight-output');
-                    const loadingIndicator = projectPanel.querySelector('.loading-indicator');
-
-                    insightOutputDiv.textContent = ''; // Clear previous output
-                    loadingIndicator.classList.remove('hidden'); // Show loading
-
-                    try {
-                        const prompt = `Please generate a summary of about 100 words for the following project, highlighting its innovativeness, technical application, and solution to practical problems. Focus on its value in current technological trends or industrial applications, especially its potential to empower small and medium-sized enterprises (SMEs).\n\nProject Title: ${projectTitle}\nProject Description: ${projectDescription.trim()}`;
-                        let chatHistory = [];
-                        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                        const payload = { contents: chatHistory };
-                        const apiKey = ""; 
-                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        const result = await response.json();
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
-                            const text = result.candidates[0].content.parts[0].text;
-                            insightOutputDiv.textContent = text;
-                        } else {
-                            insightOutputDiv.textContent = 'Failed to generate insight. Please try again later.';
-                        }
-                    } catch (error) {
-                        console.error('Error generating insight:', error);
-                        insightOutputDiv.textContent = 'An error occurred while generating insight.';
-                    } finally {
-                        loadingIndicator.classList.add('hidden'); // Hide loading
-                    }
-                });
-            });
-
-            // LLM Integration for Future Vision Expansion
-            const expandVisionBtn = document.getElementById('expand-vision-btn');
-            const futureVisionText = document.getElementById('future-vision-text').textContent;
-            const expandedVisionOutput = document.getElementById('expanded-vision-output');
-            const visionLoadingIndicator = document.getElementById('vision-loading-indicator');
-
-            expandVisionBtn.addEventListener('click', async () => {
-                expandedVisionOutput.textContent = ''; // Clear previous output
-                visionLoadingIndicator.classList.remove('hidden'); // Show loading
-
-                try {
-                    const prompt = `Based on the following personal future vision, further expand its potential, providing more specific directions, challenges, or collaboration opportunities, making it more in-depth and forward-looking, approximately 150 words. Please focus on how mathematical insights, data analysis, and innovative spirit can be applied in fields like intelligent manufacturing, smart transportation, and emphasize their role in empowering small and medium-sized enterprises (SMEs).\n\nMy Future Vision: ${futureVisionText}`;
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; 
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        expandedVisionOutput.textContent = text;
-                    } else {
-                        expandedVisionOutput.textContent = 'Failed to expand future potential. Please try again later.';
-                    }
-                } catch (error) {
-                    console.error('Error expanding vision:', error);
-                    expandedVisionOutput.textContent = 'An error occurred while expanding future potential.';
-                } finally {
-                    visionLoadingIndicator.classList.add('hidden'); // Hide loading
-                }
-            });
-
 
             // Fade-in sections on scroll
             const sections = document.querySelectorAll('.fade-in-section');
