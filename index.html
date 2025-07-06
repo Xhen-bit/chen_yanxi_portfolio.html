@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chen Yanxi's Portfolio | 陈彦希的个人作品集</title>
+    <title>Chen Yanxi's Portfolio | 陈彦汐的个人作品集</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Removed PDF libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals (Stone, Sky) -->
     <!-- Application Structure Plan: A single-page, vertical-scrolling SPA with a fixed top navigation. The structure is designed as a narrative journey: Hero (with basic info) -> Profile (with interactive skills chart) -> Sequential Projects Section -> Card-based Holistic Development -> Footer. This non-linear but guided structure enhances usability by allowing both sequential reading and direct access to key information, making it more engaging than a static document. -->
-    <!-- Visualization & Content Choices: 1. Skills -> Goal: Compare -> Viz: Chart.js Radar Chart -> Interaction: Hover Tooltips -> Justification: More engaging and visual than a text list. 2. Projects -> Goal: Organize -> Viz: Static sequential display with images -> Interaction: Scroll -> Justification: Simplifies navigation for sequential viewing, integrates images for visual appeal. 3. Holistic Dev -> Goal: Organize -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Scannable and visually separates diverse achievements. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Visualization & Content Choices: 1. Skills -> Goal: Inform -> Viz: Skill Tag Cloud -> Interaction: None (visual emphasis) -> Justification: Provides a quick, scannable overview of skills without numerical ratings. 2. Projects -> Goal: Organize -> Viz: Static sequential display with images -> Interaction: Scroll -> Justification: Simplifies navigation for sequential viewing, integrates images for visual appeal. 3. Holistic Dev -> Goal: Organize -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Scannable and visually separates diverse achievements. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -42,16 +45,25 @@
         }
         .project-image-container {
             width: 100%;
-            height: 200px; /* Fixed height for consistency */
-            overflow: hidden;
+            height: auto; /* 保持 auto，让容器高度自适应其内容 */
+            /* <--- **这是关键！设置图片容器的最大高度。你可以根据需要调整这个值。** */
+            overflow: hidden; /* <--- **取消注释或添加：当图片在容器内被 contain 缩放后，隐藏可能出现的空白区域或居中效果外的溢出** */
             border-radius: 0.5rem; /* rounded-lg */
             margin-bottom: 1rem;
+            display: flex; /* <--- **添加：使用 Flexbox 来居中图片** */
+            align-items: center; /* <--- **添加：在 Flex 容器中垂直居中图片** */
+            justify-content: center; /* <--- **添加：在 Flex 容器中水平居中图片** */
         }
         .project-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100%; /* 保持 100%，让图片宽度填充容器 */
+            height: auto; /* 保持 auto，让图片高度按比例自适应 */
+            max-height: 340px;
+            object-fit: contain; /* <--- **取消注释或添加：确保图片完整显示在容器内，不裁剪，可能会有空白边** */
         }
+        /* Removed Modal styles */
+        /* .modal { ... } */
+        /* .modal-content { ... } */
+        /* .close-button { ... } */
     </style>
 </head>
 <body class="bg-stone-50 text-stone-700 antialiased">
@@ -93,7 +105,7 @@
                         <p class="text-stone-700">University: Chongqing University</p>
                         <p class="text-stone-700">Major: Mathematics and Applied Mathematics</p>
                         <p class="text-stone-700">Email: chennnnyanxi@163.com</p>
-                        <p class="text-stone-700 text-sm mt-4">View this portfolio online: <a href="#" class="text-sky-700 hover:underline">https://xhen-bit.github.io/chen_yanxi_portfolio.html</a></p>
+                        <p class="text-stone-700 text-sm mt-4">View this portfolio online: <a href="https://xhen-bit.github.io/chen_yanxi_portfolio.html" class="text-sky-700 hover:underline">https://xhen-bit.github.io/chen_yanxi_portfolio.html</a></p>
                     </div>
 
                     <a href="#projects" class="inline-block mt-8 bg-sky-800 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-sky-700 transition-transform hover:scale-105">Explore My Projects</a>
@@ -107,7 +119,7 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 md:py-32 bg-white fade-in-section">
+        <section id="about" class="py-20 md:py-32 bg-white fade-in-section min-h-[850px]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-sky-900">Explorer & Builder</h2>
@@ -137,8 +149,17 @@
                     </div>
                     <div class="md:col-span-2">
                          <h3 class="text-2xl font-semibold text-stone-800 mb-4 text-center">Core Technical Skills</h3>
-                        <div class="chart-container">
-                            <canvas id="skillsChart"></canvas>
+                        <div class="flex flex-wrap justify-center gap-2 p-4 border rounded-lg bg-stone-50">
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Mathematical Modeling</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Federated Learning</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Signal Processing</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Fault Detection</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Data Analysis</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Reinforcement Learning</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">Python</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">C++</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">MATLAB</span>
+                            <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-medium">LaTeX</span>
                         </div>
                     </div>
                 </div>
@@ -153,9 +174,9 @@
                     <p class="text-lg text-stone-600 mt-2">From theory to practice, solving real-world problems.</p>
                 </div>
                 
-                <div id="project-content" class="space-y-16">
+                <div id="project-content" class="space-y-48">
                     <!-- Project 1: Federated Learning -->
-                    <article id="project1" class="project-panel bg-white p-8 rounded-lg shadow-lg">
+                    <article id="project1" class="project-panel bg-white p-8 rounded-lg shadow-lg min-h-[750px]">
                         <div class="project-image-container">
                             <img src="images/federated-learning-project.png" alt="Image of Federated Learning Project" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x200/e5e7eb/44403c?text=Image+Not+Found';">
                         </div>
@@ -178,7 +199,7 @@
                     </article>
 
                     <!-- Project 2: Fault Detection -->
-                    <article id="project2" class="project-panel bg-white p-8 rounded-lg shadow-lg">
+                    <article id="project2" class="project-panel bg-white p-8 rounded-lg shadow-lg min-h-[850px]">
                         <div class="project-image-container">
                             <img src="images/Fault-Diagnosis.png" alt="Image of Fault Detection Project" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x200/e5e7eb/44403c?text=Image+Not+Found';">
                         </div>
@@ -201,7 +222,7 @@
                     </article>
 
                     <!-- Project 3: Defect Prediction -->
-                    <article id="project3" class="project-panel bg-white p-8 rounded-lg shadow-lg">
+                    <article id="project3" class="project-panel bg-white p-8 rounded-lg shadow-lg min-h-[850px]">
                         <div class="project-image-container">
                             <img src="images/Defect-Prediction.png" alt="Image of Defect Prediction Project" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x200/e5e7eb/44403c?text=Image+Not+Found';">
                         </div>
@@ -227,7 +248,7 @@
         </section>
 
         <!-- Development Section -->
-        <section id="development" class="py-20 md:py-32 bg-white fade-in-section">
+        <section id="development" class="py-20 md:py-32 bg-white fade-in-section min-h-[300px]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-sky-900">Holistic Development</h2>
@@ -254,7 +275,7 @@
         </section>
 
         <!-- Contact Section -->
-        <footer id="contact" class="py-20 bg-sky-900 text-white fade-in-section">
+        <footer id="contact" class="py-6 bg-sky-900 text-white fade-in-section">
             <div class="container mx-auto px-6 text-center">
                  <h2 class="text-3xl font-bold">Contact Me</h2>
                  <p class="mt-4 max-w-2xl mx-auto">I look forward to discussing more about technology, innovation, and how to create value for SMEs. If you are interested in my experience or wish to explore potential collaborations, please feel free to contact me through the following methods.</p>
@@ -269,6 +290,9 @@
 
     </main>
 
+    <!-- Removed Modal for PDF Generation Status -->
+    <!-- <div id="pdfModal" class="modal hidden"> ... </div> -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Mobile Menu Toggle
@@ -278,63 +302,39 @@
                 mobileMenu.classList.toggle('hidden');
             });
 
-            // Skills Chart
-            const ctx = document.getElementById('skillsChart').getContext('2d');
-            const skillsChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Mathematical Modeling', 'Federated Learning', 'Signal Processing', 'Fault Detection', 'Data Analysis', 'Reinforcement Learning'],
-                    datasets: [{
-                        label: 'Proficiency in Professional Skills',
-                        data: [90, 85, 80, 80, 95, 75],
-                        backgroundColor: 'rgba(12, 74, 110, 0.2)',
-                        borderColor: 'rgba(12, 74, 110, 1)',
-                        pointBackgroundColor: 'rgba(12, 74, 110, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(12, 74, 110, 1)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
-                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                            pointLabels: { 
-                                font: { size: 12, family: "'Inter', 'Noto Sans SC', sans-serif" },
-                                color: '#44403c' // stone-700
-                            },
-                            ticks: {
-                                backdropColor: 'transparent',
-                                color: '#a8a29e', // stone-400
-                                stepSize: 25
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-
             // Fade-in sections on scroll
             const sections = document.querySelectorAll('.fade-in-section');
-            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver((entries, observerInstance) => { 
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
+                        observerInstance.unobserve(entry.target); // Stop observing once visible
                     }
                 });
             }, {
                 threshold: 0.1
             });
+
+            // Observe all sections
             sections.forEach(section => observer.observe(section));
+
+            // NEW ADDITION: Check for sections already in view on load
+            // This ensures elements visible without scrolling also fade in.
+            const checkInitialVisibility = () => {
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    // If any part of the section is in the viewport (even if it's just the top edge)
+                    // and it doesn't already have 'is-visible'
+                    if (rect.top < window.innerHeight && rect.bottom > 0 && !section.classList.contains('is-visible')) {
+                        section.classList.add('is-visible');
+                    }
+                });
+            };
+
+            // Run on load and on resize (in case viewport changes)
+            checkInitialVisibility();
+            window.addEventListener('resize', checkInitialVisibility);
+
 
             // Header shadow on scroll
             const header = document.getElementById('header');
